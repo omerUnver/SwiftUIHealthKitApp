@@ -44,8 +44,8 @@ struct GeriLottieView : UIViewRepresentable {
     
     var name = ""
     var loopMode : LottieLoopMode = .playOnce
-    static let duration : Double = 2.0
-    @Binding var isAnimating: Bool
+    static let duration : Double = 1.5
+    @Binding var notAnimating: Bool
     func makeUIView(context: UIViewRepresentableContext<GeriLottieView>) -> UIView {
         let view = UIView(frame: .zero)
         let animationView = LottieAnimationView(name: name, bundle: Bundle.main)
@@ -53,7 +53,7 @@ struct GeriLottieView : UIViewRepresentable {
         animationView.animationSpeed = GeriLottieView.duration
         animationView.contentMode = .scaleAspectFit
         animationView.play(completion: { _ in
-                    isAnimating = false
+            notAnimating = false
                 })
         view.addSubview(animationView)
         animationView.translatesAutoresizingMaskIntoConstraints = false

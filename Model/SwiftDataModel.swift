@@ -12,10 +12,13 @@ import SwiftData
 class DailyWaterModel {
     var id = UUID()
     var date : Date
-    var amount : Double
-    init(id: UUID = UUID(), date: Date, amount: Double) {
+    var amount : Int
+    
+    init(id: UUID = UUID(), date: Date, amount: Int) {
         self.id = id
         self.date = date
         self.amount = amount
+        
     }
 }
+

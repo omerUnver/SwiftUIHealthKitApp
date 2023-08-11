@@ -48,7 +48,7 @@ class AdimVerileriService: NSObject, ObservableObject{
                 if let heartRateSamples = results as? [HKQuantitySample] {
                     if let latestHeartRate = heartRateSamples.first {
                         let heartRateValue = latestHeartRate.quantity.doubleValue(for: HKUnit(from: "count/min"))
-                        let activity = Activity(id: 0, title: "Kalp Atış Hızı", subtitle: "En Son", image: "heart.fill", cins: "v/dk", amount: "\(heartRateValue.formattedString())", color: .red, chartsType: .heart)
+                        let activity = Activity(id: 0, title: "Kalp Atış Hızı", subtitle: "En Son", image: "heart.fill", cins: "v/dk", amount: "\(heartRateValue.formattedString())", color: .red, chartsType: .heart, gunlukHedef: .none)
                         DispatchQueue.main.async {
                             self.activities["avarageHeartRate"] = activity
                             }
@@ -149,7 +149,7 @@ class AdimVerileriService: NSObject, ObservableObject{
                let totalSteps = sum.doubleValue(for: HKUnit.count())
                print("Bugünkü adım sayısı: \(totalSteps)")
                
-               let activities = Activity(id: 1, title: "Günlük Hedef", subtitle: "10.000 Adım", image: "figure.walk", cins: "Adım", amount: "\(totalSteps.formattedString())", color: .green, chartsType: .step)
+               let activities = Activity(id: 1, title: "Adım", subtitle: "", image: "figure.walk", cins: "Adım", amount: "\(totalSteps.formattedString())", color: .green, chartsType: .step, gunlukHedef: .step)
                
                DispatchQueue.main.async {
                    self.activities["todaySteps"] = activities
@@ -168,7 +168,7 @@ class AdimVerileriService: NSObject, ObservableObject{
                 return
             }
             let totalCalorie = sum.doubleValue(for: .kilocalorie())
-            let activities = Activity(id: 2, title: "Günlük Hedef", subtitle: "1.000 Kcal", image: "flame", cins: "Kcal", amount: "\(totalCalorie.formattedString())", color: .orange, chartsType: .calories)
+            let activities = Activity(id: 2, title: "Aktif Enerji", subtitle: "", image: "flame", cins: "Kcal", amount: "\(totalCalorie.formattedString())", color: .orange, chartsType: .calories, gunlukHedef: .calories)
             DispatchQueue.main.async {
                 self.activities["burnedCalories"] = activities
             }

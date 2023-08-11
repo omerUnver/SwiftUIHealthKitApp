@@ -11,6 +11,7 @@ import SwiftUI
 struct AdimSayarApp: App {
    
     var body: some Scene {
+        
         WindowGroup {
             ContentView()
                     .modelContainer(for: [DailyWaterModel.self])

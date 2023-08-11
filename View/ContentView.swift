@@ -8,8 +8,9 @@
 import SwiftUI
 import SwiftData
 struct ContentView: View {
-    @ObservedObject var service = AdimVerileriService()
+    @StateObject var service = AdimVerileriService()
     @Environment(\.modelContext) private var context
+    @State var date : Date = .now
     var body: some View {
         
         NavigationView {
@@ -23,7 +24,7 @@ struct ContentView: View {
                         }
                         
                             WaterView()
-                                .frame(height: 150)
+                                .frame(height: 180)
                         
                         
                         
@@ -31,9 +32,7 @@ struct ContentView: View {
                     .padding()
                 }
             }
-            .onAppear(){
-                service.izinAl()
-            }
+            
             .scrollIndicators(.hidden)
             .navigationTitle("HealthKit")
             
@@ -41,7 +40,7 @@ struct ContentView: View {
         }
         
         
-    private func formatDate(_ date: Date) -> String {
+    private func formatDate(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         return formatter.string(from: date)

@@ -12,7 +12,12 @@ struct WaterView: View {
     @State var counter = 0
     @State var notAnimating : Bool = false
     @State var date : Date = .now
+    @State private var showingSheet = false
     
+//    UserDefaults
+    @AppStorage("su") private var gunlukHedef = 0
+    
+//    SwiftData
     @Environment(\.modelContext) var context
     @Query(sort: \DailyWaterModel.date, order: .forward) private var waterData : [DailyWaterModel]
     
@@ -35,10 +40,21 @@ struct WaterView: View {
                         .padding(.bottom, 15)
                         var newCounter = waterData.filter({$0.date == date}).reduce(0) {$0 + $1.amount}
                         
-                            Text("\(newCounter, specifier: "%2.f")/10 Bardak")
+                            Text("\(newCounter)/\(gunlukHedef) Bardak")
                                 .font(.system(size: 12))
                                 .foregroundStyle(.gray)
-                        
+                                .padding(.bottom, 5)
+                        Button(action: {
+                            showingSheet.toggle()
+                        }, label: {
+                           Text("Hedef Belirle")
+                                .font(.system(size: 12))
+                                .foregroundColor(.blue)
+                        })
+                        .sheet(isPresented: $showingSheet, content: {
+                            SheetView(selectHedef: $gunlukHedef)
+                                .presentationDetents([.fraction(0.2)])
+                        })
                             
                             
                         
@@ -67,7 +83,7 @@ struct WaterView: View {
                             
                             
                             
-                            Text("\(newCounter, specifier: "%2.f")")
+                            Text("\(newCounter)")
                                     .font(.system(size: 26))
                                     .padding(.leading, 8)
                                     .padding(.trailing, 8)
@@ -81,7 +97,7 @@ struct WaterView: View {
                                 if !isAnimating {
                                     isAnimating = true
                                     counter += 1
-                                    let water = DailyWaterModel(id: UUID(), date: date, amount: Double(1))
+                                    let water = DailyWaterModel(id: UUID(), date: date, amount: 1)
                                     context.insert(water)
                                     
                                     do {
@@ -117,22 +133,25 @@ struct WaterView: View {
                         if isAnimating {
                             LottieView(name: "ileri.json", isAnimating: $isAnimating)
                                 .frame(width: 50, height: 40, alignment: .center)
-                                .onDisappear {
+                                .onDisappear() {
                                     isAnimating = false
                                 }
                         }
                         if notAnimating {
-                            GeriLottieView(name: "geri.json", isAnimating: $notAnimating)
+                            GeriLottieView(name: "geri.json", notAnimating: $notAnimating)
                                 .frame(width: 50, height: 40, alignment: .center)
-                                .onDisappear {
+                                .onDisappear() {
                                     notAnimating = false
+                                
                                 }
+                                
                         }
                     }
                     .padding(.top, 30)
                     .padding(.leading, 8)
                     
                 }
+                
             }
             
         }

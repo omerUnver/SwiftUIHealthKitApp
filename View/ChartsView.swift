@@ -25,7 +25,7 @@ struct DailyCaloriesView : Identifiable {
 }
 
 struct ChartsView: View {
-    @ObservedObject var service = AdimVerileriService()
+    @StateObject var service = AdimVerileriService()
     var body: some View {
         VStack{
                 Chart {
@@ -38,6 +38,10 @@ struct ChartsView: View {
                 
                 
         }
+        
+        
+       
+        
         
             
             

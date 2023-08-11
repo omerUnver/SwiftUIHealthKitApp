@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F637E812A83F3580067EB0E /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F637E802A83F3580067EB0E /* SheetView.swift */; };
 		0F7B82CA2A7F446800FEF0D8 /* HeartChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7B82C92A7F446800FEF0D8 /* HeartChartView.swift */; };
 		0F7B82CD2A801EE800FEF0D8 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0F7B82CC2A801EE800FEF0D8 /* Lottie */; };
 		0F7B82D02A80824A00FEF0D8 /* geri.json in Resources */ = {isa = PBXBuildFile; fileRef = 0F7B82CE2A80824A00FEF0D8 /* geri.json */; };
@@ -40,6 +41,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0F637E802A83F3580067EB0E /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
 		0F7B82C92A7F446800FEF0D8 /* HeartChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartChartView.swift; sourceTree = "<group>"; };
 		0F7B82CE2A80824A00FEF0D8 /* geri.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = geri.json; sourceTree = "<group>"; };
 		0F7B82CF2A80824A00FEF0D8 /* ileri.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ileri.json; sourceTree = "<group>"; };
@@ -76,7 +78,7 @@
 		0F7C90602A7718D8002978AD = {
 			isa = PBXGroup;
 			children = (
-				0F7C90AA2A77D502002978AD /* ModelView */,
+				0FBD52012A85CEAB006B4BEA /* Service */,
 				0F7C90AB2A77D519002978AD /* View */,
 				0F7C90A92A77D4FA002978AD /* Model */,
 				0F7C906B2A7718D8002978AD /* AdimSayar */,
@@ -123,14 +125,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		0F7C90AA2A77D502002978AD /* ModelView */ = {
-			isa = PBXGroup;
-			children = (
-				0F7C90902A7718FE002978AD /* Service.swift */,
-			);
-			path = ModelView;
-			sourceTree = "<group>";
-		};
 		0F7C90AB2A77D519002978AD /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,8 +136,17 @@
 				0F85D1A02A7E73EB00F930DF /* ActivityCard.swift */,
 				0F7B82C92A7F446800FEF0D8 /* HeartChartView.swift */,
 				0F7B82D72A80947F00FEF0D8 /* SuTuketimiChartView.swift */,
+				0F637E802A83F3580067EB0E /* SheetView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		0FBD52012A85CEAB006B4BEA /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				0F7C90902A7718FE002978AD /* Service.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +234,7 @@
 				0F7C90AF2A781385002978AD /* WaterView.swift in Sources */,
 				0F7C90B12A782C8E002978AD /* KalpRitmiModel.swift in Sources */,
 				0F7C906F2A7718D8002978AD /* ContentView.swift in Sources */,
+				0F637E812A83F3580067EB0E /* SheetView.swift in Sources */,
 				0F7B82DE2A809F7A00FEF0D8 /* SwiftDataModel.swift in Sources */,
 				0F7F01912A7A97CF00627BDA /* ChartsView.swift in Sources */,
 				0F7C90AD2A77D568002978AD /* StepDataModel.swift in Sources */,

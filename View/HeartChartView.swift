@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct CaloriesChartView : View {
-    @ObservedObject var service = AdimVerileriService()
+    @StateObject var service = AdimVerileriService()
     var body: some View {
         VStack {
                     Chart {
@@ -19,13 +19,17 @@ struct CaloriesChartView : View {
                         }
                     }
                     .chartScrollableAxes(.horizontal)
+                    
+        
+            
         }
+        
     }
 }
 
 
 struct HeartChartView: View {
-    @ObservedObject var service = AdimVerileriService()
+    @StateObject var service = AdimVerileriService()
     var body: some View {
         VStack{
             Chart {
@@ -38,7 +42,10 @@ struct HeartChartView: View {
             }
             .chartScrollableAxes(.horizontal)
             
+            
         }
+        
+        
                 
     }
     
