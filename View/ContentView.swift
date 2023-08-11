@@ -23,8 +23,8 @@ struct ContentView: View {
                             
                         }
                         
-                            WaterView()
-                                .frame(height: 180)
+                        WaterView()
+                            .frame(height: 180)
                         
                         
                         
@@ -34,23 +34,14 @@ struct ContentView: View {
             }
             
             .scrollIndicators(.hidden)
-            .navigationTitle("HealthKit")
+            .navigationTitle("My Health")
             
-            }
         }
-        
-        
-    private func formatDate(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return formatter.string(from: date)
-    }
-        
-        
-        
     }
     
-    
+}
+
+
 
 
 struct ContentView_Previews: PreviewProvider {

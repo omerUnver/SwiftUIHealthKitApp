@@ -14,10 +14,10 @@ struct WaterView: View {
     @State var date : Date = .now
     @State private var showingSheet = false
     
-//    UserDefaults
+    //    UserDefaults
     @AppStorage("su") private var gunlukHedef = 0
     
-//    SwiftData
+    //    SwiftData
     @Environment(\.modelContext) var context
     @Query(sort: \DailyWaterModel.date, order: .forward) private var waterData : [DailyWaterModel]
     
@@ -32,7 +32,7 @@ struct WaterView: View {
                             Image(systemName: "drop.fill")
                                 .font(.system(size: 16))
                                 .foregroundColor(.blue)
-                            Text("Günlük Su Tüketimi")
+                            Text("Su Tüketimi")
                                 .font(.system(size: 16))
                                 .foregroundColor(.blue)
                         }
@@ -40,14 +40,14 @@ struct WaterView: View {
                         .padding(.bottom, 15)
                         var newCounter = waterData.filter({$0.date == date}).reduce(0) {$0 + $1.amount}
                         
-                            Text("\(newCounter)/\(gunlukHedef) Bardak")
-                                .font(.system(size: 12))
-                                .foregroundStyle(.gray)
-                                .padding(.bottom, 5)
+                        Text("\(newCounter)/\(gunlukHedef) Bardak")
+                            .font(.system(size: 12))
+                            .foregroundStyle(.gray)
+                            .padding(.bottom, 5)
                         Button(action: {
                             showingSheet.toggle()
                         }, label: {
-                           Text("Hedef Belirle")
+                            Text("Günlük Hedef Belirle")
                                 .font(.system(size: 12))
                                 .foregroundColor(.blue)
                         })
@@ -55,8 +55,8 @@ struct WaterView: View {
                             SheetView(selectHedef: $gunlukHedef)
                                 .presentationDetents([.fraction(0.2)])
                         })
-                            
-                            
+                        
+                        
                         
                         
                         
@@ -75,6 +75,7 @@ struct WaterView: View {
                                         print(error.localizedDescription)
                                     }
                                     
+                                    
                                 }
                             } label: {
                                 Text("-")
@@ -83,12 +84,13 @@ struct WaterView: View {
                             
                             
                             
-                            Text("\(newCounter)")
-                                    .font(.system(size: 26))
-                                    .padding(.leading, 8)
-                                    .padding(.trailing, 8)
                             
-                               
+                            Text("\(newCounter)")
+                                .font(.system(size: 26))
+                                .padding(.leading, 8)
+                                .padding(.trailing, 8)
+                            
+                            
                             
                             
                             
@@ -130,21 +132,26 @@ struct WaterView: View {
                     HStack{
                         SuTuketimiChartView()
                             .padding(.trailing, 10)
+                            .padding(.bottom, 10)
                         if isAnimating {
                             LottieView(name: "ileri.json", isAnimating: $isAnimating)
-                                .frame(width: 50, height: 40, alignment: .center)
+                                .frame(width: 50, height: 40)
                                 .onDisappear() {
                                     isAnimating = false
+                                    notAnimating = false
                                 }
                         }
                         if notAnimating {
                             GeriLottieView(name: "geri.json", notAnimating: $notAnimating)
-                                .frame(width: 50, height: 40, alignment: .center)
+                                .frame(width: 50, height: 40)
+                            
                                 .onDisappear() {
                                     notAnimating = false
-                                
+                                    isAnimating = false
+                                    
+                                    
                                 }
-                                
+                            
                         }
                     }
                     .padding(.top, 30)
@@ -156,8 +163,6 @@ struct WaterView: View {
             
         }
     }
-    
-    
     
 }
 

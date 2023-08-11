@@ -12,6 +12,7 @@ struct SheetView: View {
     let gunlukSuHedefi = [0,5,10,15,20,25,30,35,40,45,50]
     @Binding var selectHedef : Int
     @State var date : Date = .now
+    @Environment(\.colorScheme) private var colorScheme
     var body: some View {
         VStack{
             Text("Günlük Su Tüketim Hedefinizi Belirleyiniz")
@@ -23,6 +24,7 @@ struct SheetView: View {
                         .task {
                             UserDefaults.standard.set(self.selectHedef, forKey: "su")
                         }
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                     
                     
                 }
@@ -44,6 +46,7 @@ struct StepViewHedef : View {
     @Environment(\.dismiss) var dismiss
     let gunlukAdimHedefleri = [1000,2000,3000,4000,5000,6000,7000,8000,9000,10000,11000,12000,13000,14000,15000]
     @Binding var selectHedef : Int
+    @Environment(\.colorScheme) private var colorScheme
     var body: some View {
         VStack{
             Text("Günlük Adım Hedefinizi Belirleyiniz")
@@ -55,6 +58,7 @@ struct StepViewHedef : View {
                         .task {
                             UserDefaults.standard.set(self.selectHedef, forKey: "adim")
                         }
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                 }
             }
             .pickerStyle(.inline)
@@ -70,6 +74,7 @@ struct CaloriesViewHedef : View {
     @Environment(\.dismiss) var dismiss
     let gunlukCalorieHedefleri = [1000,2000,3000,4000,5000,6000,7000,8000,9000,10000,11000,12000,13000,14000,15000]
     @Binding var selectHedef : Int
+    @Environment(\.colorScheme) private var colorScheme
     var body: some View {
         VStack{
             Text("Günlük Kalori Hedefinizi Belirleyiniz")
@@ -81,6 +86,7 @@ struct CaloriesViewHedef : View {
                         .task {
                             UserDefaults.standard.set(self.selectHedef, forKey: "calorie")
                         }
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                 }
             }
             .pickerStyle(.inline)

@@ -28,27 +28,27 @@ struct ChartsView: View {
     @StateObject var service = AdimVerileriService()
     var body: some View {
         VStack{
-                Chart {
-                    ForEach(service.oneMonthChartsData) { daily in
-                        BarMark(x: .value(daily.date.formatted(), daily.date, unit: .day), y: .value("Steps", daily.stepCount))
-                            .foregroundStyle(.green)
-                    }
+            Chart {
+                ForEach(service.oneMonthChartsData) { daily in
+                    BarMark(x: .value(daily.date.formatted(), daily.date, unit: .day), y: .value("Steps", daily.stepCount))
+                        .foregroundStyle(.green)
                 }
-                .chartScrollableAxes(.horizontal)
-                
-                
-        }
-        
-        
-       
-        
-        
+            }
+            .chartScrollableAxes(.horizontal)
             
             
         }
+        
+        
+        
+        
+        
+        
+        
     }
-   
-    
+}
+
+
 
 //#Preview {
 //    ChartsView()

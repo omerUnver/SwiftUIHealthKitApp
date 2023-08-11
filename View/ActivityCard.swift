@@ -40,6 +40,7 @@ struct ActivityCard: View {
     @AppStorage("adim") private var gunlukAdimHedef = 0
     @State private var showingCalorieSheet = false
     @AppStorage("calorie") private var gunlukCalorieHedef = 0
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         ZStack {
             Color(uiColor: .systemGray6)
@@ -94,7 +95,7 @@ struct ActivityCard: View {
                                 CaloriesViewHedef(selectHedef: $gunlukCalorieHedef)
                                     .presentationDetents([.fraction(0.4)])
                             }
-
+                            
                         }
                     }
                     Spacer()
@@ -102,7 +103,7 @@ struct ActivityCard: View {
                 }
                 HStack{
                     Text(activity.amount)
-                    
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                         .font(.system(size: 26))
                     Text(activity.cins)
                         .font(.system(size: 15))
@@ -112,16 +113,16 @@ struct ActivityCard: View {
                     
                     if activity.chartsType == .heart {
                         HeartChartView()
-                            
-                            
+                        
+                        
                     }
                     if activity.chartsType == .step {
                         ChartsView()
-                            
+                        
                     }
                     if activity.chartsType == .calories {
                         CaloriesChartView()
-                            
+                        
                     }
                     
                 }

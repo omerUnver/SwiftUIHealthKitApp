@@ -40,27 +40,27 @@ class AdimVerileriService: NSObject, ObservableObject{
     
     
     
-  
+    
     func kalpAtisHızı(){
         
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
         let query = HKSampleQuery(sampleType: heartRate, predicate: nil, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { (query, results, error) in
-                if let heartRateSamples = results as? [HKQuantitySample] {
-                    if let latestHeartRate = heartRateSamples.first {
-                        let heartRateValue = latestHeartRate.quantity.doubleValue(for: HKUnit(from: "count/min"))
-                        let activity = Activity(id: 0, title: "Kalp Atış Hızı", subtitle: "En Son", image: "heart.fill", cins: "v/dk", amount: "\(heartRateValue.formattedString())", color: .red, chartsType: .heart, gunlukHedef: .none)
-                        DispatchQueue.main.async {
-                            self.activities["avarageHeartRate"] = activity
-                            }
-                    } else {
-                        print("Kalp atış hızı verisi bulunamadı.")
+            if let heartRateSamples = results as? [HKQuantitySample] {
+                if let latestHeartRate = heartRateSamples.first {
+                    let heartRateValue = latestHeartRate.quantity.doubleValue(for: HKUnit(from: "count/min"))
+                    let activity = Activity(id: 0, title: "Kalp Atış Hızı", subtitle: "En Son", image: "heart.fill", cins: "v/dk", amount: "\(heartRateValue.formattedString())", color: .red, chartsType: .heart, gunlukHedef: .none)
+                    DispatchQueue.main.async {
+                        self.activities["avarageHeartRate"] = activity
                     }
                 } else {
-                    print("Veriler alınamadı, hata: \(error?.localizedDescription ?? "Bilinmeyen bir hata oluştu.")")
+                    print("Kalp atış hızı verisi bulunamadı.")
                 }
+            } else {
+                print("Veriler alınamadı, hata: \(error?.localizedDescription ?? "Bilinmeyen bir hata oluştu.")")
             }
-            healthStore.execute(query)
-     
+        }
+        healthStore.execute(query)
+        
     }
     
     func fetchDailySteps(startDate: Date, completion : @escaping ([DailyStepView]) -> Void) {
@@ -89,7 +89,7 @@ class AdimVerileriService: NSObject, ObservableObject{
         let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
         let interval = DateComponents(day: 1)
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: .strictStartDate)
-
+        
         let query = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { query, samples, error in
             guard let samples = samples as? [HKQuantitySample] else {
                 completion([])
@@ -108,31 +108,31 @@ class AdimVerileriService: NSObject, ObservableObject{
             
             completion(dailyHeartRates)
         }
-
+        
         healthStore.execute(query)
     }
-   func fetchCaloriesDaily(startDate: Date, completion: @escaping ([DailyCaloriesView]) -> Void) {
-       let steps = HKQuantityType(.activeEnergyBurned)
-       let interval = DateComponents(day: 1)
-       let query = HKStatisticsCollectionQuery(quantityType: steps, quantitySamplePredicate: nil, anchorDate: startDate, intervalComponents: interval)
-       
-       query.initialResultsHandler = {query, result, error in
-           guard let result = result else {
-               completion([])
-               return
-           }
-           var dailySteps = [DailyCaloriesView]()
-           result.enumerateStatistics(from: startDate, to: Date()) { statistic, stop in
-               dailySteps.append(DailyCaloriesView(date: statistic.startDate, caloriesCount: statistic.sumQuantity()?.doubleValue(for: .kilocalorie()) ?? 0.00))
-           }
-           completion(dailySteps)
-           
-       }
-       healthStore.execute(query)
-       
+    func fetchCaloriesDaily(startDate: Date, completion: @escaping ([DailyCaloriesView]) -> Void) {
+        let steps = HKQuantityType(.activeEnergyBurned)
+        let interval = DateComponents(day: 1)
+        let query = HKStatisticsCollectionQuery(quantityType: steps, quantitySamplePredicate: nil, anchorDate: startDate, intervalComponents: interval)
+        
+        query.initialResultsHandler = {query, result, error in
+            guard let result = result else {
+                completion([])
+                return
+            }
+            var dailySteps = [DailyCaloriesView]()
+            result.enumerateStatistics(from: startDate, to: Date()) { statistic, stop in
+                dailySteps.append(DailyCaloriesView(date: statistic.startDate, caloriesCount: statistic.sumQuantity()?.doubleValue(for: .kilocalorie()) ?? 0.00))
+            }
+            completion(dailySteps)
+            
+        }
+        healthStore.execute(query)
+        
     }
-
-
+    
+    
     
     
     func AdimOku(){
@@ -140,22 +140,22 @@ class AdimVerileriService: NSObject, ObservableObject{
         let date = Date()
         let startOfDay = calender.startOfDay(for: date)
         let predicate = HKQuery.predicateForSamples(withStart: startOfDay, end: date, options: .strictStartDate)
-           let query = HKStatisticsQuery(quantityType: stepCountType, quantitySamplePredicate: predicate, options: .cumulativeSum) { (query, result, error) in
-               guard let result = result, let sum = result.sumQuantity() else {
-                   print("Adım sayar verileri alınamadı: \(error?.localizedDescription ?? "Bilinmeyen Hata")")
-                   return
-               }
-               
-               let totalSteps = sum.doubleValue(for: HKUnit.count())
-               print("Bugünkü adım sayısı: \(totalSteps)")
-               
-               let activities = Activity(id: 1, title: "Adım", subtitle: "", image: "figure.walk", cins: "Adım", amount: "\(totalSteps.formattedString())", color: .green, chartsType: .step, gunlukHedef: .step)
-               
-               DispatchQueue.main.async {
-                   self.activities["todaySteps"] = activities
-               }
-           }
-           healthStore.execute(query)
+        let query = HKStatisticsQuery(quantityType: stepCountType, quantitySamplePredicate: predicate, options: .cumulativeSum) { (query, result, error) in
+            guard let result = result, let sum = result.sumQuantity() else {
+                print("Adım sayar verileri alınamadı: \(error?.localizedDescription ?? "Bilinmeyen Hata")")
+                return
+            }
+            
+            let totalSteps = sum.doubleValue(for: HKUnit.count())
+            print("Bugünkü adım sayısı: \(totalSteps)")
+            
+            let activities = Activity(id: 1, title: "Adım", subtitle: "", image: "figure.walk", cins: "Adım", amount: "\(totalSteps.formattedString())", color: .green, chartsType: .step, gunlukHedef: .step)
+            
+            DispatchQueue.main.async {
+                self.activities["todaySteps"] = activities
+            }
+        }
+        healthStore.execute(query)
     }
     func burnedCaloriesToday(){
         let calender = Calendar.current
@@ -174,14 +174,14 @@ class AdimVerileriService: NSObject, ObservableObject{
             }
             
             
-
+            
         }
         healthStore.execute(query)
     }
-   
+    
+    
+}
 
-        }
-   
 extension Date{
     static var startOfDay : Date {
         Calendar.current.startOfDay(for: Date())
@@ -203,7 +203,7 @@ extension Date{
         let calender = Calendar.current
         let date = calender.date(byAdding: .day, value: -7, to: Date())!
         return calender.startOfDay(for: date)
-        }
+    }
     
     
     

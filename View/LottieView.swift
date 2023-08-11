@@ -19,16 +19,16 @@ struct LottieView: UIViewRepresentable {
         animationView.animationSpeed = LottieView.duration
         animationView.contentMode = .scaleAspectFit
         animationView.play(completion: { _ in
-                    isAnimating = false
-                })
+            isAnimating = false
+        })
         view.addSubview(animationView)
         animationView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-        
+            
             animationView.widthAnchor.constraint(equalTo: view.widthAnchor),
             animationView.heightAnchor.constraint(equalTo: view.heightAnchor)
-        
+            
         ])
         return view
     }
@@ -54,15 +54,16 @@ struct GeriLottieView : UIViewRepresentable {
         animationView.contentMode = .scaleAspectFit
         animationView.play(completion: { _ in
             notAnimating = false
-                })
+            animationView.stop()
+        })
         view.addSubview(animationView)
         animationView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-        
+            
             animationView.widthAnchor.constraint(equalTo: view.widthAnchor),
             animationView.heightAnchor.constraint(equalTo: view.heightAnchor)
-        
+            
         ])
         return view
     }
